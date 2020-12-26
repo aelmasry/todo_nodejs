@@ -5,12 +5,21 @@ let router = express.Router();
 // router.use(bodyParser.json());
 let Task = require('../Models/Task');
 
-/* GET users listing. */
+/* GET tasks listing. */
 router.get('/', (req, res, next) => {
   Task.find({}, function (err, tasks) {
     if (err) return res.status(500).send("There was a problem finding the tasks.");
     res.status(200).send(tasks);
   });
+});
+
+/* GET task by id. */
+router.get('/:id', (req, res, next) => {
+  Task.findById(req.params.id, function (err, task) {
+        if (err) return res.status(500).send("There was a problem finding the task.");
+        if (!task) return res.status(404).send("No task found.");
+        res.status(200).send(task);
+    });
 });
 
 // create todo and send back all todos after creation
@@ -26,8 +35,6 @@ router.post('/store', function (req, res) {
       res.status(200).send(user);
     });
 });
-
-
 
 // create todo and send back all todos after creation
 router.post('/update/:id', function (req, res) {

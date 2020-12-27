@@ -1,5 +1,11 @@
 var mongoose = require('mongoose');
-var TaskSchema = new mongoose.Schema({
+mongoose.Promise = global.Promise;
+
+var Task = new mongoose.Schema({
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  },
   name: {
     type: String,
     required: true
@@ -9,5 +15,7 @@ var TaskSchema = new mongoose.Schema({
 },
 { timestamps: true }
 );
-mongoose.model('Task', TaskSchema);
-module.exports = mongoose.model('Task');
+
+Task = mongoose.model('Task', Task);
+
+module.exports = Task;

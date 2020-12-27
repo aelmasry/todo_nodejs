@@ -1,7 +1,6 @@
 // use express package
 const express = require('express')
       cors = require('cors'),
-      session = require('express-session'),
       bodyParser = require('body-parser')
       createError = require('http-errors');
       // md5 = require('md5'),

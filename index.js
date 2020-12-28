@@ -3,7 +3,10 @@ const express = require('express')
       cors = require('cors'),
       bodyParser = require('body-parser'),
       createError = require('http-errors'),
-      path = require('path') ;
+      path = require('path'),
+      bcrypt = require('bcrypt'),
+      jwt = require('jsonwebtoken');;
+
 
 const app = express();
 
@@ -20,8 +23,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const dbconnect = require('./config/database.js')
 
+// simple route
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to todo application." });
+});
+
 let tasksController = require('./Controllers/TasksController')
 app.use('/tasks', tasksController)
+
+require('./routes/users')(app);
+require('./routes/index')(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
